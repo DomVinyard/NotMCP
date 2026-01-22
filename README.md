@@ -85,11 +85,12 @@ Credentials are stored in `~/.claude/skills/notmcp/.credentials` with `chmod 600
 
 ## Supported agents
 
-notmcp works with any agent that can:
-1. Read skill files from `~/.claude/skills/`
-2. Run shell commands
+notmcp works with any agent that supports the [Agent Skills](https://agentskills.io) standard:
 
-This includes Claude Code and Cursor. The skill auto-discovery means your agent learns about notmcp automatically.
+- **Claude Code** – works out of the box
+- **Cursor** – requires [nightly channel](https://cursor.com/docs/context/skills) (Settings → Beta → Update channel → Nightly)
+
+Both agents auto-discover skills from `~/.claude/skills/`, so notmcp is available immediately after install.
 
 ## License
 
