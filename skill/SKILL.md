@@ -61,14 +61,53 @@ To see what credentials are already stored:
 
 ## Connecting to Services
 
-When the user wants to connect to a service, guide them through getting an API key or token. We use API keys and tokens instead of OAuth because they're simpler and don't require browser automation.
+When the user wants to connect to a service, guide them **interactively, one step at a time**. Wait for the user to complete each step before proceeding to the next.
 
-### Connection Process
+### Connection Process (Interactive)
 
-1. **Open the credentials page** in their browser
-2. **Guide them** through creating an API key, token, or App Password
-3. **Store the credential** securely
-4. **Verify it works** with a simple API call before creating tools
+**Step 1: Open the credentials page**
+- Run `open "URL"` to open the page in their browser
+- Tell them what page opened and wait for confirmation they see it
+
+**Step 2: Guide them through the UI (one action at a time)**
+- Give ONE instruction, then wait for them to do it
+- Don't dump all steps at once - be conversational
+- Example: "Click 'Generate new token'" → wait → "Now copy the token that appears"
+
+**Step 3: Collect the credential**
+- Ask them to paste the token/key
+- Store it immediately when they provide it
+
+**Step 4: Verify silently**
+- Run a verification API call
+- Only tell them if it fails - if it works, just confirm "Connected!"
+
+### Important: Be Interactive
+
+BAD (dumping everything):
+```
+Here's how to connect:
+1. Go to URL
+2. Click X
+3. Click Y  
+4. Copy Z
+5. Paste it here
+```
+
+GOOD (interactive):
+```
+I'll open the GitHub tokens page for you.
+[opens browser]
+Let me know when you see the page.
+
+[user: "ok I see it"]
+
+Click "Generate new token" at the top.
+
+[user: "done"]
+
+Now copy the token that appears and paste it here.
+```
 
 ### Verifying Connections
 
@@ -76,6 +115,7 @@ After storing credentials, verify they work by making a simple API call:
 - Most REST APIs have a /me, /user, or /auth endpoint
 - Use the http-get tool or make a quick urllib request
 - If it fails, troubleshoot with the user before proceeding
+- If it works, just say "Connected!" - don't over-explain
 
 ### Common Services
 
