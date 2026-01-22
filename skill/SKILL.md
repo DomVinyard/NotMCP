@@ -59,6 +59,88 @@ To see what credentials are already stored:
 ~/.claude/skills/notmcp/bin/notmcp creds list
 ```
 
+## Connecting to Services
+
+When the user wants to connect to a service, guide them through getting an API key or token. We use API keys and tokens instead of OAuth because they're simpler and don't require browser automation.
+
+### Connection Process
+
+1. **Open the credentials page** in their browser
+2. **Guide them** through creating an API key, token, or App Password
+3. **Store the credential** securely
+4. **Verify it works** with a simple API call before creating tools
+
+### Verifying Connections
+
+After storing credentials, verify they work by making a simple API call:
+- Most REST APIs have a /me, /user, or /auth endpoint
+- Use the http-get tool or make a quick urllib request
+- If it fails, troubleshoot with the user before proceeding
+
+### Common Services
+
+**Google (Gmail, Drive, Calendar)** - App Password
+- URL: https://myaccount.google.com/apppasswords
+- Requires 2FA enabled on the account
+- Guide: "Select 'Other (Custom name)', enter 'notmcp', click Generate"
+- Store as: GOOGLE_APP_PASSWORD and GOOGLE_EMAIL
+
+**GitHub** - Personal Access Token
+- URL: https://github.com/settings/tokens/new?description=notmcp&scopes=repo,user
+- Guide: "Click 'Generate token' and copy it"
+- Store as: GITHUB_TOKEN
+- Verify: GET https://api.github.com/user with Authorization header
+
+**Slack** - Bot Token
+- URL: https://api.slack.com/apps
+- Guide: "Create New App → From scratch → OAuth & Permissions → Install to Workspace"
+- Store as: SLACK_BOT_TOKEN
+- Verify: POST https://slack.com/api/auth.test
+
+**Notion** - Integration Token
+- URL: https://www.notion.so/my-integrations
+- Guide: "New integration → Name 'notmcp' → Copy the Internal Integration Secret"
+- Store as: NOTION_TOKEN
+- Remind user to share specific pages with the integration
+
+**OpenAI** - API Key
+- URL: https://platform.openai.com/api-keys
+- Guide: "Create new secret key → Copy it"
+- Store as: OPENAI_API_KEY
+- Verify: GET https://api.openai.com/v1/models
+
+**Linear** - API Key
+- URL: https://linear.app/settings/api
+- Store as: LINEAR_API_KEY
+
+**Stripe** - Secret Key
+- URL: https://dashboard.stripe.com/apikeys
+- Store as: STRIPE_SECRET_KEY
+
+### Other Services
+
+For services not listed:
+1. Search for their API or Developer documentation
+2. Find where to create API keys or tokens
+3. Guide the user through the process
+4. Store with a descriptive name: {SERVICE}_API_KEY
+5. Verify with a simple API call before building tools
+
+## Using Context7 for API Documentation (Optional)
+
+Context7 provides up-to-date API documentation. If CONTEXT7_API_KEY is set, fetch current docs before creating tools to avoid using outdated or hallucinated endpoints:
+
+```bash
+~/.claude/skills/notmcp/bin/notmcp run context7-docs --input '{"library": "googleapis/gmail", "topic": "send"}'
+```
+
+**To set up Context7:**
+1. Open: https://context7.com/dashboard
+2. Sign up (free) and copy your API key
+3. Store: `echo "xxx" | ~/.claude/skills/notmcp/bin/notmcp creds set CONTEXT7_API_KEY`
+
+Without Context7, you can still create tools using your knowledge, but results may be less accurate for newer APIs.
+
 ## Creating Tools
 
 **Only create new tools when the user explicitly asks** (e.g., "save this as a tool", "make this reusable", "create a tool for this").
