@@ -1,12 +1,12 @@
 # notmcp
 
-**Actions, not protocols.**
+**Real tools for AI agents**
 
-notmcp is a local tool system for AI agents. Instead of wiring up MCP servers or installing integrations, your agent writes and maintains executable scripts that live on your machine.
+notmcp lets AI agents create, store, and run local scripts that connect to any API. No servers. No protocols. Just code.
 
 ## Install
 
-Copy this line and paste it to your agent (Claude Code, Cursor, etc.):
+Copy this line and paste it to your agent (Claude Code or Cursor):
 
 ```
 Install notmcp: curl -fsSL https://notmcp.com/install.sh | bash
@@ -14,13 +14,11 @@ Install notmcp: curl -fsSL https://notmcp.com/install.sh | bash
 
 That's it. Your agent runs the command, and notmcp is ready.
 
-## What it does
-
-When you ask your agent to "connect to PostHog" or "search my Gmail," it doesn't negotiate with a server. It writes (or reuses) a script that does the job, stores credentials safely, and runs it locally. The tool returns structured output, and the agent continues.
-
-**The user never has to think about any of this.** notmcp is agent-first. Your interface is just the chat. The agent quietly maintains a local toolbox at `~/.claude/skills/notmcp/`.
-
 ## How it works
+
+1. **Ask your agent** — "Connect to PostHog" or "Search my Gmail" — just describe what you need
+2. **Agent writes a tool** — Your agent creates a Python script that handles auth and API calls, stored locally
+3. **Tool runs locally** — JSON in, JSON out. Your agent gets structured data and continues working
 
 ```
 ~/.claude/skills/notmcp/
@@ -32,11 +30,19 @@ When you ask your agent to "connect to PostHog" or "search my Gmail," it doesn't
 └── .credentials      # API keys (chmod 600, never in repos)
 ```
 
-Your agent discovers tools by running `notmcp list` or `notmcp search`. It runs them with `notmcp run <tool>`. It creates new tools with `notmcp create <name>`.
+## Why notmcp
+
+**Tools without the ceremony.** Most tools just call an API. You don't need a protocol for that.
+
+- **No server to run** — tools are scripts, not services
+- **No protocol to learn** — JSON in, JSON out
+- **No dependency hell** — stdlib Python only
+- **Debuggable** — run any tool manually in your terminal
+- **Evolvable** — your agent can improve tools over time
 
 ## The tool contract
 
-Tools are just Python scripts with a header:
+Tools are Python scripts with a header:
 
 ```python
 #!/usr/bin/env python3
@@ -51,9 +57,9 @@ import json, os, sys
 def main():
     inp = json.load(sys.stdin) if not sys.stdin.isatty() else {}
     api_key = os.environ["MY_API_KEY"]
-    
+
     # Do the work...
-    
+
     print(json.dumps({"result": "..."}))
 
 if __name__ == "__main__":
@@ -65,19 +71,9 @@ if __name__ == "__main__":
 - Logs go to stderr
 - Exit 0 = success
 
-## Why not MCP?
+## Security
 
-MCP is great for structured tool ecosystems. But most tools are just "call an API, handle auth, return something sane." notmcp replaces the ceremony with the obvious thing: code.
-
-- **No server to run** – tools are scripts, not services
-- **No protocol to learn** – JSON in, JSON out
-- **No dependency hell** – stdlib Python only
-- **Debuggable** – run any tool manually: `./scripts/my-tool.py`
-- **Evolvable** – your agent can improve tools over time
-
-## Credential security
-
-Credentials are stored in `~/.claude/skills/notmcp/.credentials` with `chmod 600` (owner-only access). This is the same security model as `~/.aws/credentials` or `~/.netrc`. Credentials are:
+Credentials are stored in `~/.claude/skills/notmcp/.credentials` with `chmod 600` (owner-only). Same security model as `~/.aws/credentials`.
 
 - Never written to any repository
 - Never included in tool output
@@ -85,12 +81,10 @@ Credentials are stored in `~/.claude/skills/notmcp/.credentials` with `chmod 600
 
 ## Supported agents
 
-notmcp works with any agent that supports the [Agent Skills](https://agentskills.io) standard:
+- **Claude Code** — works out of the box
+- **Cursor** — requires [nightly channel](https://cursor.com/docs/context/skills) (Settings → Beta → Nightly)
 
-- **Claude Code** – works out of the box
-- **Cursor** – requires [nightly channel](https://cursor.com/docs/context/skills) (Settings → Beta → Update channel → Nightly)
-
-Both agents auto-discover skills from `~/.claude/skills/`, so notmcp is available immediately after install.
+Both auto-discover skills from `~/.claude/skills/`.
 
 ## License
 
