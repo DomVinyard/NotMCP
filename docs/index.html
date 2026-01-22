@@ -135,11 +135,27 @@
         }
 
         .install-warning {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             font-size: 0.75rem;
             color: var(--text-secondary);
-            text-align: center;
-            margin-top: 8px;
-            opacity: 0.7;
+            background: rgba(234, 179, 8, 0.1);
+            border: 1px solid rgba(234, 179, 8, 0.3);
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-top: 16px;
+        }
+
+        .install-warning svg {
+            width: 14px;
+            height: 14px;
+            color: #eab308;
+            flex-shrink: 0;
+        }
+
+        .install-warning a {
+            color: var(--accent);
         }
 
         /* Sections */
@@ -305,7 +321,12 @@
                 </div>
             </div>
             <p class="install-note">Your agent runs the command. You never touch the terminal.</p>
-            <p class="install-warning">Cursor requires <a href="https://cursor.com/docs/context/skills" style="color: var(--accent)">nightly build</a> for skill auto-discovery.</p>
+            <div class="install-warning">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span>Cursor requires <a href="https://cursor.com/docs/context/skills">nightly build</a> for skill auto-discovery.</span>
+            </div>
         </header>
 
         <!-- What it is -->
