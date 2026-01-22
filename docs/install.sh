@@ -6,7 +6,7 @@
 set -e
 
 SKILL_DIR="$HOME/.claude/skills/notmcp"
-REPO="domvin/NotMCP"
+REPO="DomVinyard/NotMCP"
 BRANCH="main"
 REPO_URL="https://github.com/$REPO/archive/refs/heads/$BRANCH.tar.gz"
 
