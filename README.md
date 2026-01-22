@@ -1,6 +1,6 @@
 # notmcp
 
-**Tools for agents, not protocols.**
+**Actions, not protocols.**
 
 notmcp is a local tool system for AI agents. Instead of wiring up MCP servers or installing integrations, your agent writes and maintains executable scripts that live on your machine.
 
