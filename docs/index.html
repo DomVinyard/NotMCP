@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>notmcp - Tools for agents, not protocols</title>
+    <meta name="description" content="A local tool system for AI agents. Your agent writes and maintains executable scripts that live on your machine.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-code: #1a1a1a;
+            --text: #fafafa;
+            --text-secondary: #a1a1a1;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --border: #262626;
+            --success: #22c55e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+        }
+
+        /* Install Box */
+        .install-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .install-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .install-command {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .install-command code {
+            flex: 1;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text);
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+
+        .copy-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+        }
+
+        .copy-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .install-note {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* Sections */
+        section {
+            padding: 64px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        section h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: -0.01em;
+        }
+
+        section p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 1.0625rem;
+        }
+
+        section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Code blocks */
+        pre {
+            background: var(--bg-code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 24px 0;
+        }
+
+        pre code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.7;
+            color: var(--text);
+        }
+
+        .comment { color: #6b7280; }
+        .string { color: #a5d6ff; }
+        .keyword { color: #ff7b72; }
+        .function { color: #d2a8ff; }
+
+        /* Directory tree */
+        .tree {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .tree .dir { color: var(--accent); }
+        .tree .file { color: var(--text); }
+        .tree .desc { color: #6b7280; }
+
+        /* List */
+        ul {
+            list-style: none;
+            margin: 24px 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+        }
+
+        ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* FAQ */
+        .faq-item {
+            margin-bottom: 32px;
+        }
+
+        .faq-item h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .faq-item p {
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .hero {
+                padding: 80px 0 60px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .tagline {
+                font-size: 1.25rem;
+            }
+            
+            .install-command {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .install-command code {
+                font-size: 0.8rem;
+            }
+            
+            .copy-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero -->
+        <header class="hero">
+            <h1>notmcp</h1>
+            <p class="tagline">Tools for agents, not protocols.</p>
+            
+            <div class="install-box">
+                <p class="install-label">Paste this to your agent (Claude Code, Cursor):</p>
+                <div class="install-command">
+                    <code id="install-text">Install notmcp: curl -fsSL https://notmcp.com/install.sh | bash</code>
+                    <button class="copy-btn" onclick="copyInstall()">
+                        <svg id="copy-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        <svg id="check-icon" style="display:none" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span id="copy-text">Copy</span>
+                    </button>
+                </div>
+            </div>
+            <p class="install-note">Your agent runs the command. You never touch the terminal.</p>
+        </header>
+
+        <!-- What it is -->
+        <section>
+            <h2>What it is</h2>
+            <p>notmcp is a reaction to a simple frustration: agents need tools, but most "tool systems" feel like you're installing a protocol.</p>
+            <p>In practice, most tools are just "call an API, handle auth, return something sane." So notmcp replaces the ceremony with the obvious thing: code.</p>
+            <p>When you ask your agent to "connect to PostHog" or "search my Gmail," it doesn't negotiate with a server. It writes (or reuses) a script that does the job, stores credentials safely, and runs it locally. The tool returns structured output, and your agent continues.</p>
+        </section>
+
+        <!-- How it works -->
+        <section>
+            <h2>How it works</h2>
+            <p>Tools live in a private directory under your home folder:</p>
+            
+            <pre><code class="tree"><span class="dir">~/.claude/skills/notmcp/</span>
+├── <span class="file">SKILL.md</span>          <span class="desc"># Teaches your agent how to use notmcp</span>
+├── <span class="dir">bin/</span>
+│   └── <span class="file">notmcp</span>        <span class="desc"># The CLI (stdlib Python, no dependencies)</span>
+├── <span class="dir">scripts/</span>          <span class="desc"># Your tools live here</span>
+│   ├── <span class="file">posthog-get-users.py</span>
+│   └── <span class="file">gmail-search.py</span>
+└── <span class="file">.credentials</span>      <span class="desc"># API keys (chmod 600, never in repos)</span></code></pre>
+
+            <p>Your agent discovers tools by running <code>notmcp list</code>. It runs them with <code>notmcp run</code>. It creates new ones with <code>notmcp create</code>.</p>
+            <p>Over time, your local notmcp library becomes an evolving SDK that keeps getting better.</p>
+        </section>
+
+        <!-- Tool contract -->
+        <section>
+            <h2>The tool contract</h2>
+            <p>Tools are just Python scripts with a header declaring what they need:</p>
+            
+            <pre><code><span class="comment">#!/usr/bin/env python3</span>
+<span class="string">"""
+name: posthog-get-users
+description: Fetch users from PostHog
+credentials:
+  - POSTHOG_API_KEY
+"""</span>
+<span class="keyword">import</span> json, os, sys
+
+<span class="keyword">def</span> <span class="function">main</span>():
+    inp = json.load(sys.stdin) <span class="keyword">if not</span> sys.stdin.isatty() <span class="keyword">else</span> {}
+    api_key = os.environ[<span class="string">"POSTHOG_API_KEY"</span>]
+    
+    <span class="comment"># Do the work...</span>
+    
+    <span class="keyword">print</span>(json.dumps({<span class="string">"users"</span>: [...]}))
+
+<span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:
+    main()</code></pre>
+
+            <ul>
+                <li>JSON in (stdin) → JSON out (stdout)</li>
+                <li>Credentials injected as environment variables</li>
+                <li>Logs go to stderr</li>
+                <li>Exit 0 = success</li>
+                <li>Stdlib only—no pip dependencies</li>
+            </ul>
+        </section>
+
+        <!-- Why not MCP -->
+        <section>
+            <h2>Why not MCP?</h2>
+            <p>MCP is great for structured tool ecosystems. But notmcp is for a different problem: most tools are simple, and the protocol overhead isn't worth it.</p>
+            <ul>
+                <li><strong>No server to run</strong> – tools are scripts, not services</li>
+                <li><strong>No protocol to learn</strong> – JSON in, JSON out</li>
+                <li><strong>No dependency hell</strong> – stdlib Python only</li>
+                <li><strong>Debuggable</strong> – run any tool manually in your terminal</li>
+                <li><strong>Evolvable</strong> – your agent can improve tools over time</li>
+            </ul>
+        </section>
+
+        <!-- FAQ -->
+        <section>
+            <h2>FAQ</h2>
+            
+            <div class="faq-item">
+                <h3>How are credentials stored?</h3>
+                <p>In a JSON file at <code>~/.claude/skills/notmcp/.credentials</code> with <code>chmod 600</code> (owner-only access). Same security model as <code>~/.aws/credentials</code>. Never written to any repository.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Which agents are supported?</h3>
+                <p>Any agent that can read from <code>~/.claude/skills/</code> and run shell commands. This includes Claude Code and Cursor. The skill is auto-discovered.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Can tools use pip packages?</h3>
+                <p>We recommend stdlib-only for portability, but nothing stops you from using pip packages if they're installed on your system. The contract is just JSON in/out.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>How do I create a new tool?</h3>
+                <p>Ask your agent: "Create a tool for [whatever you need]." Or run <code>notmcp create my-tool</code> and edit the scaffolded script.</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>
+                <a href="https://github.com/domvin/NotMCP">GitHub</a>
+                &nbsp;·&nbsp;
+                MIT License
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function copyInstall() {
+            const text = document.getElementById('install-text').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const copyIcon = document.getElementById('copy-icon');
+                const checkIcon = document.getElementById('check-icon');
+                const copyText = document.getElementById('copy-text');
+                
+                btn.classList.add('copied');
+                copyIcon.style.display = 'none';
+                checkIcon.style.display = 'block';
+                copyText.textContent = 'Copied!';
+                
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    copyIcon.style.display = 'block';
+                    checkIcon.style.display = 'none';
+                    copyText.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
