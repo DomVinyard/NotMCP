@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>notmcp - Give your AI agent real tools</title>
+    <title>notmcp - Simple tools for AI agents</title>
     <meta name="description" content="notmcp lets AI agents create, store, and run local scripts that connect to any API. No servers. No protocols. Just code.">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="notmcp - Real tools for AI agents">
+    <meta property="og:title" content="notmcp - Simple tools for AI agents">
     <meta property="og:description" content="Let AI agents create, store, and run local scripts that connect to any API. No servers. No protocols. Just code.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://notmcp.com">
@@ -18,7 +18,7 @@
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="notmcp - Real tools for AI agents">
+    <meta name="twitter:title" content="notmcp - Simple tools for AI agents">
     <meta name="twitter:description" content="Let AI agents create, store, and run local scripts that connect to any API. No servers. No protocols. Just code.">
     <meta name="twitter:image" content="https://notmcp.com/og-image.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,13 +53,17 @@
             scroll-behavior: smooth;
         }
 
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
         }
 
         /* Animations */
@@ -146,7 +150,7 @@
 
         .nav-logo {
             font-weight: 700;
-            font-size: 1.125rem;
+            font-size: 1.375rem;
             color: var(--text);
             text-decoration: none;
             display: flex;
@@ -322,7 +326,6 @@
 
         .highlight-brand {
             color: var(--text);
-            font-weight: 500;
         }
 
         /* CTA Buttons */
@@ -446,6 +449,10 @@
 
         .install-step-arrow {
             color: var(--text-muted);
+        }
+
+        .step-text-short {
+            display: none;
         }
 
         .install-command {
@@ -665,7 +672,6 @@
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 16px;
-            position: relative;
             transition: all 0.3s;
         }
 
@@ -675,20 +681,7 @@
         }
 
         .step-number {
-            position: absolute;
-            top: -16px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.875rem;
-            font-weight: 700;
-            color: white;
+            display: none;
         }
 
         .step-icon {
@@ -720,39 +713,29 @@
             line-height: 1.6;
         }
 
-        .step-connector {
-            display: none;
-        }
-
         /* Features */
         .features {
             padding: 80px 0;
             border-top: 1px solid var(--border);
         }
 
-        .feature-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 64px;
-        }
-
-        .feature-row {
+        .features-simple {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 64px;
-            align-items: center;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
         }
 
-        .feature-row:nth-child(even) {
-            direction: rtl;
+        .feature-simple {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.3s;
         }
 
-        .feature-row:nth-child(even) > * {
-            direction: ltr;
-        }
-
-        .feature-content {
-            max-width: 480px;
+        .feature-simple:hover {
+            border-color: var(--border-light);
+            transform: translateY(-4px);
         }
 
         .feature-icon {
@@ -772,121 +755,17 @@
             color: var(--accent);
         }
 
-        .feature-content h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            letter-spacing: -0.01em;
+        .feature-simple h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
         }
 
-        .feature-content p {
-            font-size: 1.0625rem;
+        .feature-simple p {
+            font-size: 0.9375rem;
             color: var(--text-secondary);
-            line-height: 1.7;
+            line-height: 1.6;
         }
-
-        .feature-visual {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            min-height: 240px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .feature-code {
-            width: 100%;
-        }
-
-        .feature-code pre {
-            margin: 0;
-            background: var(--bg-code);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 16px;
-            overflow-x: auto;
-        }
-
-        .feature-code code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8125rem;
-            line-height: 1.7;
-            color: var(--text);
-        }
-
-        /* Code Example Section */
-        .code-examples {
-            padding: 80px 0;
-            border-top: 1px solid var(--border);
-        }
-
-        .code-tabs {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 0;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-bottom: none;
-            border-radius: 12px 12px 0 0;
-            padding: 8px 8px 0;
-        }
-
-        .code-tab {
-            padding: 12px 20px;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 8px 8px 0 0;
-            transition: all 0.2s;
-            font-family: inherit;
-        }
-
-        .code-tab:hover {
-            color: var(--text-secondary);
-        }
-
-        .code-tab.active {
-            background: var(--bg-code);
-            color: var(--text);
-        }
-
-        .code-panel {
-            display: none;
-            background: var(--bg-code);
-            border: 1px solid var(--border);
-            border-radius: 0 0 12px 12px;
-            padding: 24px;
-            overflow-x: auto;
-        }
-
-        .code-panel.active {
-            display: block;
-        }
-
-        .code-panel pre {
-            margin: 0;
-            background: transparent;
-            border: none;
-            padding: 0;
-        }
-
-        .code-panel code {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            line-height: 1.8;
-            color: var(--text);
-        }
-
-        .comment { color: #6b7280; }
-        .string { color: #a5d6ff; }
-        .keyword { color: #ff7b72; }
-        .function { color: #d2a8ff; }
-        .variable { color: #ffa657; }
 
         /* Security Section */
         .security {
@@ -1077,13 +956,8 @@
                 gap: 48px;
             }
 
-            .feature-row {
+            .features-simple {
                 grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            .feature-row:nth-child(even) {
-                direction: ltr;
             }
 
             .faq-grid {
@@ -1105,6 +979,11 @@
         }
 
         @media (max-width: 640px) {
+            .hero-logos {
+                flex-direction: column;
+                gap: 12px;
+            }
+
             .hero {
                 padding: 120px 0 60px;
             }
@@ -1121,48 +1000,54 @@
                 font-size: 2rem;
             }
 
+            /* Install box and buttons same width on mobile */
+            .install-box {
+                max-width: 100%;
+            }
+
             .cta-buttons {
                 flex-direction: column;
-                align-items: center;
+                align-items: stretch;
+                width: 100%;
             }
 
             .btn {
                 width: 100%;
-                max-width: 300px;
+                max-width: none;
                 justify-content: center;
+                padding: 14px 28px;
+                font-size: 1rem;
+            }
+
+            /* Step 2: show short text on mobile */
+            .step-text-full {
+                display: none;
+            }
+
+            .step-text-short {
+                display: inline;
+            }
+
+            /* Hide copy button inside install box on mobile */
+            .install-command .copy-btn {
+                display: none;
             }
 
             .install-command {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
+                justify-content: center;
             }
 
             .install-command code {
                 font-size: 0.75rem;
                 text-align: center;
+                white-space: normal;
+                word-break: break-all;
             }
 
-            .copy-btn {
-                width: 100%;
-                padding: 10px;
-            }
-
-            .trust-logos {
-                gap: 32px;
-            }
-
-            .code-tabs {
-                flex-wrap: wrap;
-            }
-
-            .code-tab {
-                padding: 10px 14px;
-                font-size: 0.8125rem;
-            }
-
-            .feature-content h3 {
-                font-size: 1.25rem;
+            .container,
+            .container-narrow {
+                max-width: 100%;
+                overflow-x: hidden;
             }
 
             .final-cta h2 {
@@ -1182,7 +1067,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                 </svg>
-                <span>GitHub</span>
+                <span class="github-text">GitHub</span>
                 <span class="github-stars" id="stars">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
@@ -1220,7 +1105,7 @@
             </div>
             
             <h1 class="animate-in delay-1">
-                Real tools<br><span class="gradient-text">for AI agents</span>
+                Simple tools<br><span class="gradient-text">for AI agents</span>
             </h1>
             
             <p class="subtitle animate-in delay-2">
@@ -1237,7 +1122,8 @@
                         <span class="install-step-arrow">→</span>
                         <div class="install-step">
                             <span class="install-step-number">2</span>
-                            Paste to your AI agent
+                            <span class="step-text-full">Paste to your AI agent</span>
+                            <span class="step-text-short">Paste</span>
                         </div>
                         <span class="install-step-arrow">→</span>
                         <div class="install-step">
@@ -1286,7 +1172,7 @@
         <div class="container">
             <div class="section-header">
                 <span class="section-label">How it works</span>
-                <h2 class="section-title">Three steps</h2>
+                <h2 class="section-title">As simple as asking</h2>
                 <p class="section-subtitle">Ask your agent to connect to any service. It handles the rest.</p>
             </div>
 
@@ -1309,8 +1195,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
                         </svg>
                     </div>
-                    <h3>Agent writes a tool</h3>
-                    <p>Your agent creates a Python script that handles auth and API calls. Stored locally.</p>
+                    <h3>Agent builds a tool</h3>
+                    <p>Your agent creates a connection to the service, handling authentication for you.</p>
                 </div>
 
                 <div class="step">
@@ -1320,8 +1206,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                         </svg>
                     </div>
-                    <h3>Tool runs locally</h3>
-                    <p>JSON in, JSON out. Your agent gets structured data and continues working.</p>
+                    <h3>Use it anytime</h3>
+                    <p>The tool is saved locally. Your agent can use it whenever you need that service again.</p>
                 </div>
             </div>
         </div>
@@ -1329,172 +1215,53 @@
 
     <!-- Features -->
     <section class="features">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">Why notmcp</span>
-                <h2 class="section-title">Tools without the ceremony</h2>
-                <p class="section-subtitle">Most tools just call an API. You don't need a protocol for that.</p>
-            </div>
-
-            <div class="feature-grid">
-                <div class="feature-row">
-                    <div class="feature-content">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
-                            </svg>
-                        </div>
-                        <h3>Skip the server setup</h3>
-                        <p>Tools are just Python scripts, not running services. No ports, no processes, no Docker. Your agent runs a script, gets a result, moves on.</p>
-                    </div>
-                    <div class="feature-visual">
-                        <div class="feature-code">
-                            <pre><code><span class="comment"># No server needed</span>
-<span class="comment"># Just run the tool directly</span>
-$ notmcp run github-list-repos
-
-<span class="string">{"repos": ["NotMCP", "my-app"]}</span></code></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="feature-row">
-                    <div class="feature-content">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                            </svg>
-                        </div>
-                        <h3>Debug like normal code</h3>
-                        <p>Every tool is a Python script you can read, edit, and run directly in your terminal. No black boxes, no mysterious protocols.</p>
-                    </div>
-                    <div class="feature-visual">
-                        <div class="feature-code">
-                            <pre><code><span class="comment"># Run any tool manually</span>
-$ python ~/.claude/skills/notmcp/scripts/slack-post.py
-
-<span class="comment"># Check what it does</span>
-$ cat ~/.claude/skills/notmcp/scripts/slack-post.py</code></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="feature-row">
-                    <div class="feature-content">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-                            </svg>
-                        </div>
-                        <h3>Tools that improve over time</h3>
-                        <p>Your agent can refine and expand your toolbox as you use it. Find a bug? Ask your agent to fix it. Need a new feature? Just ask.</p>
-                    </div>
-                    <div class="feature-visual">
-                        <div class="feature-code">
-                            <pre><code><span class="comment"># Your toolbox grows organically</span>
-$ notmcp list
-
-<span class="variable">github-list-repos</span>     List GitHub repos
-<span class="variable">slack-post</span>            Post to Slack
-<span class="variable">posthog-get-users</span>     Fetch PostHog users
-<span class="variable">gmail-search</span>          Search Gmail</code></pre>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="feature-row">
-                    <div class="feature-content">
-                        <div class="feature-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                            </svg>
-                        </div>
-                        <h3>Zero dependencies</h3>
-                        <p>Tools use Python's standard library only. No pip installs, no version conflicts, no dependency hell. Works on any machine with Python.</p>
-                    </div>
-                    <div class="feature-visual">
-                        <div class="feature-code">
-                            <pre><code><span class="comment"># Just stdlib - that's it</span>
-<span class="keyword">import</span> json
-<span class="keyword">import</span> os
-<span class="keyword">import</span> sys
-<span class="keyword">from</span> urllib.request <span class="keyword">import</span> urlopen</code></pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Code Examples -->
-    <section class="code-examples">
         <div class="container-narrow">
             <div class="section-header">
-                <span class="section-label">The contract</span>
-                <h2 class="section-title">Simple by design</h2>
-                <p class="section-subtitle">JSON in, JSON out. That's the entire protocol.</p>
+                <span class="section-label">Why notmcp</span>
+                <h2 class="section-title">Let your agent do the work</h2>
+                <p class="section-subtitle">You describe what you need. Your agent builds and maintains the tools.</p>
             </div>
 
-            <div class="code-tabs">
-                <button class="code-tab active" onclick="switchCodeTab('tool')">A tool</button>
-                <button class="code-tab" onclick="switchCodeTab('run')">Running it</button>
-                <button class="code-tab" onclick="switchCodeTab('create')">Creating one</button>
-            </div>
+            <div class="features-simple">
+                <div class="feature-simple">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3>No setup required</h3>
+                    <p>No servers, no Docker, no configuration files. Install once and start asking your agent to connect to services.</p>
+                </div>
 
-            <div class="code-panel active" id="panel-tool">
-                <pre><code><span class="comment">#!/usr/bin/env python3</span>
-<span class="string">"""
-name: github-list-repos
-description: List repositories for the authenticated user
-credentials:
-  - GITHUB_TOKEN
-"""</span>
-<span class="keyword">import</span> json, os, sys
-<span class="keyword">from</span> urllib.request <span class="keyword">import</span> urlopen, Request
+                <div class="feature-simple">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                        </svg>
+                    </div>
+                    <h3>Grows with you</h3>
+                    <p>Your agent builds new tools as you need them. Ask for a Slack integration today, add Gmail tomorrow.</p>
+                </div>
 
-<span class="keyword">def</span> <span class="function">main</span>():
-    token = os.environ[<span class="string">"GITHUB_TOKEN"</span>]
-    
-    req = Request(<span class="string">"https://api.github.com/user/repos"</span>)
-    req.add_header(<span class="string">"Authorization"</span>, <span class="string">f"Bearer </span>{token}<span class="string">"</span>)
-    
-    data = json.loads(urlopen(req).read())
-    repos = [r[<span class="string">"name"</span>] <span class="keyword">for</span> r <span class="keyword">in</span> data]
-    
-    <span class="keyword">print</span>(json.dumps({<span class="string">"repos"</span>: repos}))
+                <div class="feature-simple">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <h3>Fix bugs by asking</h3>
+                    <p>Something not working? Just tell your agent. It can read, edit, and improve any tool it created.</p>
+                </div>
 
-<span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:
-    main()</code></pre>
-            </div>
-
-            <div class="code-panel" id="panel-run">
-                <pre><code><span class="comment"># List available tools</span>
-$ notmcp list
-<span class="variable">github-list-repos</span>    List repositories for the authenticated user
-
-<span class="comment"># Run a tool</span>
-$ notmcp run github-list-repos
-{<span class="string">"repos"</span>: [<span class="string">"NotMCP"</span>, <span class="string">"my-project"</span>, <span class="string">"dotfiles"</span>]}
-
-<span class="comment"># Run with input</span>
-$ notmcp run github-create-issue --input <span class="string">'{"repo": "NotMCP", "title": "Bug"}'</span>
-{<span class="string">"issue_number"</span>: 42}</code></pre>
-            </div>
-
-            <div class="code-panel" id="panel-create">
-                <pre><code><span class="comment"># Create a new tool scaffold</span>
-$ notmcp create my-new-tool
-
-<span class="variable">Created:</span> ~/.claude/skills/notmcp/scripts/my-new-tool.py
-
-<span class="comment"># Or just ask your agent:</span>
-<span class="string">"Create a tool that fetches my Stripe customers"</span>
-
-<span class="comment"># Your agent will:</span>
-<span class="comment"># 1. Create the script</span>
-<span class="comment"># 2. Ask for your API key</span>
-<span class="comment"># 3. Store it securely</span>
-<span class="comment"># 4. Test the tool</span></code></pre>
+                <div class="feature-simple">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                        </svg>
+                    </div>
+                    <h3>Fully open source</h3>
+                    <p>MIT licensed. Read the code, fork it, contribute. No vendor lock-in, no black boxes.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1628,15 +1395,6 @@ $ notmcp create my-new-tool
                 nav.classList.remove('scrolled');
             }
         });
-
-        // Code tabs
-        function switchCodeTab(tab) {
-            document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.code-panel').forEach(p => p.classList.remove('active'));
-            
-            event.target.classList.add('active');
-            document.getElementById('panel-' + tab).classList.add('active');
-        }
 
         // Copy and show modal
         function copyAndShowModal() {
