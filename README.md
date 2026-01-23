@@ -9,7 +9,7 @@ notmcp lets AI agents create, store, and run local scripts that connect to any A
 Copy this line and paste it to your agent (Claude Code or Cursor):
 
 ```
-Install notmcp: curl -fsSL https://notmcp.com/install.sh | bash
+Hey agent, use notmcp: curl -fsSL notmcp.com/use | bash
 ```
 
 That's it. Your agent runs the command, and notmcp is ready.

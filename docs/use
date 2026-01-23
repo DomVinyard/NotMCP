@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # notmcp installer
-# Run with: curl -fsSL https://notmcp.com/install.sh | bash
+# Run with: curl -fsSL notmcp.com/use | bash
 #
 set -e
 
